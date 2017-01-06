@@ -133,7 +133,7 @@ var heuristic = function(state, maximizingPlayer){
 
 
 
-	 score = (linesOfLengthTwoForMax - linesOfLengthTwoForMin) + ((linesOfLengthThreeForMax - linesOfLengthThreeForMin) * 3) + ((linesOfLengthFourForMax - linesOfLengthFourForMin) * 5);
+	 score = (linesOfLengthTwoForMax - linesOfLengthTwoForMin) + ((linesOfLengthThreeForMax - linesOfLengthThreeForMin) * 5) + ((linesOfLengthFourForMax - linesOfLengthFourForMin) * 15);
 
 	 return score;
 
@@ -163,6 +163,7 @@ to see if you are maximizing or minimizing.
 var minimax = function(state, depth, maximizingPlayer){
 	var minimizingPlayer = (maximizingPlayer == 'x') ? 'o' : 'x';
 	var possibleStates = state.nextStates();
+	console.log('possibleStates', possibleStates);
 	var currentPlayer = state.nextMovePlayer;
 
 	if (depth === 0 || !possibleStates){
@@ -170,9 +171,27 @@ var minimax = function(state, depth, maximizingPlayer){
 	}
 
 	else {
-		//minimax(state, depth--, maximizingPlayer)
+		if(currentPlayer === maximizingPlayer){
+			let currentHigh = 0;
+			for (var i = 0; i < possibleStates.length; i++){
+				 if(minimax(possibleStates[i], depth-1, maximizingPlayer) > currentHigh){
+					 currentHigh = minimax(possibleStates[i], depth-1, maximizingPlayer)
+				 }
+			}
+			return currentHigh;
+
+		}
+		else{
+			let currentLow = 0;
+			for (var j = 0; j < possibleStates.length; j++){
+				if(minimax(possibleStates[j], depth-1, minimizingPlayer) > currentLow){
+					currentLow = minimax(possibleStates[j], depth-1, minimizingPlayer)
+				}
+			}
+			return currentLow;
+		}
 	}
-	return Math.random();
+
 }
 
 

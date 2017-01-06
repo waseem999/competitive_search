@@ -9,7 +9,6 @@ var heuristic = minimaxLib.heuristic;
 /* 
    A heuristic takes as input some particular game state.
    and outputs a number indicating how good / bad that state is.
-
    More specifically, the heuristic for a zero-sum game -- that is,
    a game where any gain by one side is loss for the other side --
    will return a higher positive number the better the game is
