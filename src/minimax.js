@@ -110,14 +110,33 @@ You'll want to pass the tests defined in minimax_specs.js.
 */
 var heuristic = function(state, maximizingPlayer){
 
+	let score = 1;
+	
+
+    const nextMovePlayer = state.nextMovePlayer;
+
 	//This is how you can retrieve the minimizing player.
     var minimizingPlayer = (maximizingPlayer == 'x') ? 'o' : 'x';
 
 	//An example.
-    var linesOfLengthTwoForX = state.numLines(2, 'x')
 
-    //Your code here.  Don't return random, obviously.
-	return Math.random()
+	
+    var linesOfLengthTwoForMax = state.numLines(2, maximizingPlayer);
+	var linesOfLengthTwoForMin = state.numLines(2, minimizingPlayer);
+
+	
+    var linesOfLengthThreeForMax = state.numLines(3, maximizingPlayer);
+	var linesOfLengthThreeForMin = state.numLines(3, minimizingPlayer);
+
+	var linesOfLengthFourForMax = state.numLines(3, maximizingPlayer);
+	var linesOfLengthFourForMin = state.numLines(3, minimizingPlayer);
+
+
+
+	 score = (linesOfLengthTwoForMax - linesOfLengthTwoForMin) + ((linesOfLengthThreeForMax - linesOfLengthThreeForMin) * 3) + ((linesOfLengthFourForMax - linesOfLengthFourForMin) * 5);
+
+	 return score;
+
 }
 
 
@@ -142,10 +161,17 @@ which returns whether the next moving player is 'x' or 'o',
 to see if you are maximizing or minimizing.
 */
 var minimax = function(state, depth, maximizingPlayer){
-	var minimizingPlayer = (state.maximizingPlayer == 'x') ? 'o' : 'x';
+	var minimizingPlayer = (maximizingPlayer == 'x') ? 'o' : 'x';
 	var possibleStates = state.nextStates();
 	var currentPlayer = state.nextMovePlayer;
-	//Your code here.
+
+	if (depth === 0 || !possibleStates){
+		return heuristic(state, maximizingPlayer)
+	}
+
+	else {
+		//minimax(state, depth--, maximizingPlayer)
+	}
 	return Math.random();
 }
 
